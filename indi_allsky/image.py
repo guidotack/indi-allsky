@@ -394,7 +394,6 @@ class ImageWorker(Process):
             # adu calculate (before processing)
             adu, adu_average = self.calculate_histogram(scidata, exposure)
 
-
             # line detection
             if self.night_v.value and self.config.get('DETECT_METEORS'):
                 image_lines = self._lineDetect.detectLines(scidata)
@@ -408,6 +407,12 @@ class ImageWorker(Process):
             else:
                 blob_stars = list()
 
+            if not self.night_v.value and self.config['DAYTIME_AUTO_STRETCH']:
+                # Auto stretch during the day
+                scidata = self.auto_stretch(scidata)
+            elif self.night_v.value and self.config['NIGHT_AUTO_STRETCH']:
+                # Auto stretch during night
+                scidata = self.auto_stretch(scidata)
 
             # additional draw code
             if self.config.get('DETECT_DRAW'):
@@ -1489,6 +1494,74 @@ class ImageWorker(Process):
 
         return cv2.cvtColor(new_lab, cv2.COLOR_LAB2BGR)
 
+    def auto_stretch(self, data):
+        """Automatic histogram stretch
+
+        This algorithm is based on the method implemented in PixInsight
+        (http://pixinsight.com/)
+
+        The implementation has been adapted from the code available under an MIT license from
+        https://github.com/LCOGT/auto_stretch        
+        """
+
+        shadows_clip = self.config['AUTO_STRETCH_SHADOWS_CLIP']
+        target_bkg = self.config['AUTO_STRETCH_TARGET_BKG']
+
+        logger.info(f'Applying automatic histogram stretching, shadows clipping {shadows_clip}, target background {target_bkg}')
+
+        scale_factor = numpy.max(data)
+
+        # Normalise data
+        data = data / scale_factor
+
+        median = numpy.median(data)
+        n = data.size
+
+        avg_dev = numpy.sum( abs(data - median) / n)
+
+        c0 = numpy.clip(median + (shadows_clip * avg_dev), 0, 1)
+
+        def _mtf(m, x):
+                """Midtones Transfer Function
+                MTF(m, x) = {
+                    0                for x == 0,
+                    1/2              for x == m,
+                    1                for x == 1,
+                    (m - 1)x
+                    --------------   otherwise.
+                    (2m - 1)x - m
+                }
+                See the section "Midtones Balance" from
+                https://pixinsight.com/doc/tools/HistogramTransformation/HistogramTransformation.html
+                Args:
+                    m (float): midtones balance parameter
+                            a value below 0.5 darkens the midtones
+                            a value above 0.5 lightens the midtones
+                    x (np.array): the data that we want to copy and transform.
+                """
+                shape = x.shape
+                x = x.flatten()
+                zeros = x==0
+                halfs = x==m
+                ones = x==1
+                others = numpy.logical_xor((x==x), (zeros + halfs + ones))
+
+                x[zeros] = 0
+                x[halfs] = 0.5
+                x[ones] = 1
+                x[others] = (m - 1) * x[others] / ((((2 * m) - 1) * x[others]) - m)
+                return x.reshape(shape)
+
+        m = _mtf(target_bkg, median - c0)
+
+        below = data < c0
+        above = data >= c0
+
+        data[below] = 0
+        data[above] = _mtf(m, (data[above] - c0) / (1 - c0))
+
+        # Return data in original scale
+        return data * scale_factor
 
     def equalizeHistogram(self, data_bytes):
         if len(data_bytes.shape) == 2:

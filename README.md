@@ -298,6 +298,10 @@ All configuration is read from /etc/indi-allsky/config.json .  You can find conf
 | DAYTIME_TIMELAPSE   | true        | (bool) Generate timelapse from day time images |
 | DAYTIME_CONTRAST_ENHANCE | false  | (bool) Perform CLAHE contrast enhancement on day time images |
 | NIGHT_CONTRAST_ENHANCE   | false  | (bool) Perform CLAHE contrast enhancement on night time images |
+| DAYTIME_AUTO_STRETCH | false  | (bool) Perform automatic histogram stretch on day time images |
+| NIGHT_AUTO_STRETCH   | false  | (bool) Perform automatic histogram stretch on night time images |
+| AUTO_STRETCH_SHADOWS_CLIIP | -1.25 | (float) Shadows clipping point for automatic histogram stretch |
+| AUTO_STRETCH_TARGET_BKG | 0.25 | (float) Target background for automatic histogram stretch |
 | NIGHT_SUN_ALT_DEG   | -6          | (degrees) Altitude of Sun to calculate beginning and end of night |
 | NIGHT_MOONMODE_ALT_DEG   | 0      | (degrees) Altitude of Moon to enable night time "moon mode" |
 | NIGHT_MOONMODE_PHASE     | 33     | (percent) Minimum illumination of Moon to enable night time "moon mode" |

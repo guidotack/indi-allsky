@@ -618,6 +618,56 @@
 
     <div class="form-group row">
         <div class="col-sm-2">
+            {{ form_config.DAYTIME_AUTO_STRETCH.label }}
+        </div>
+        <div class="col-sm-2">
+            <div class="form-switch">
+                {{ form_config.DAYTIME_AUTO_STRETCH(class='form-check-input') }}
+                <div id="DAYTIME_AUTO_STRETCH-error" class="invalid-feedback text-danger" style="display: none;"></div>
+            </div>
+        </div>
+        <div class="col-sm-8">Apply automatic histogram stretch</div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-2">
+            {{ form_config.NIGHT_AUTO_STRETCH.label }}
+        </div>
+        <div class="col-sm-2">
+            <div class="form-switch">
+                {{ form_config.NIGHT_AUTO_STRETCH(class='form-check-input') }}
+                <div id="NIGHT_AUTO_STRETCH-error" class="invalid-feedback text-danger" style="display: none;"></div>
+            </div>
+        </div>
+        <div class="col-sm-8">Apply automatic histogram stretch</div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-2">
+            {{ form_config.AUTO_STRETCH_SHADOWS_CLIP.label(class='col-form-label') }}
+        </div>
+        <div class="col-sm-2">
+            {{ form_config.AUTO_STRETCH_SHADOWS_CLIP(class='form-control bg-secondary') }}
+            <div id="AUTO_STRETCH_SHADOWS_CLIP-error" class="invalid-feedback text-danger" style="display: none;"></div>
+        </div>
+        <div class="col-sm-8">Shadows clipping point for automatic histogram stretching</div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-2">
+            {{ form_config.AUTO_STRETCH_TARGET_BKG.label(class='col-form-label') }}
+        </div>
+        <div class="col-sm-2">
+            {{ form_config.AUTO_STRETCH_TARGET_BKG(class='form-control bg-secondary') }}
+            <div id="AUTO_STRETCH_TARGET_BKG-error" class="invalid-feedback text-danger" style="display: none;"></div>
+        </div>
+        <div class="col-sm-8">Target background for automatic histogram stretching</div>
+    </div>
+
+    <hr />
+
+    <div class="form-group row">
+        <div class="col-sm-2">
             {{ form_config.NIGHT_SUN_ALT_DEG.label(class='col-form-label') }}
         </div>
         <div class="col-sm-2">
@@ -1742,6 +1792,8 @@ const field_names = [
     'DETECT_MASK',
     'LOCATION_LATITUDE',
     'LOCATION_LONGITUDE',
+    'AUTO_STRETCH_SHADOWS_CLIP',
+    'AUTO_STRETCH_TARGET_BKG',
     'NIGHT_SUN_ALT_DEG',
     'NIGHT_MOONMODE_ALT_DEG',
     'NIGHT_MOONMODE_PHASE',
@@ -1829,6 +1881,8 @@ const checkbox_field_names = [
     'DAYTIME_TIMELAPSE',
     'DAYTIME_CONTRAST_ENHANCE',
     'NIGHT_CONTRAST_ENHANCE',
+    'DAYTIME_AUTO_STRETCH',
+    'NIGHT_AUTO_STRETCH',
     'KEOGRAM_LABEL',
     'STARTRAILS_TIMELAPSE',
     'IMAGE_LABEL',

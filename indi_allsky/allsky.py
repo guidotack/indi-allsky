@@ -345,6 +345,14 @@ class IndiAllSky(object):
         if not c.get('FFMPEG_CODEC'):
             c['FFMPEG_CODEC'] = 'libx264'
 
+        if not 'DAYTIME_AUTO_STRETCH' in c:
+            c['DAYTIME_AUTO_STRETCH'] = False
+        if not 'NIGHT_AUTO_STRETCH' in c:
+            c['NIGHT_AUTO_STRETCH'] = False
+        if not 'AUTO_STRETCH_SHADOWS_CLIP' in c:
+            c['AUTO_STRETCH_SHADOWS_CLIP'] = -1.25
+        if not 'AUTO_STRETCH_TARGET_BKG' in c:
+            c['AUTO_STRETCH_TARGET_BKG'] = 0.25
 
         return c
 

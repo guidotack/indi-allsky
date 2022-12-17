@@ -840,6 +840,10 @@ class ConfigView(FormView):
             'DAYTIME_TIMELAPSE'              : self.indi_allsky_config.get('DAYTIME_TIMELAPSE', True),
             'DAYTIME_CONTRAST_ENHANCE'       : self.indi_allsky_config.get('DAYTIME_CONTRAST_ENHANCE', False),
             'NIGHT_CONTRAST_ENHANCE'         : self.indi_allsky_config.get('NIGHT_CONTRAST_ENHANCE', False),
+            'DAYTIME_AUTO_STRETCH'           : self.indi_allsky_config.get('DAYTIME_AUTO_STRETCH', False),
+            'NIGHT_AUTO_STRETCH'             : self.indi_allsky_config.get('NIGHT_AUTO_STRETCH', False),
+            'AUTO_STRETCH_SHADOWS_CLIP'      : self.indi_allsky_config.get('AUTO_STRETCH_SHADOWS_CLIP', -1.25),
+            'AUTO_STRETCH_TARGET_BKG'        : self.indi_allsky_config.get('AUTO_STRETCH_TARGET_BKG', 0.25),
             'NIGHT_SUN_ALT_DEG'              : self.indi_allsky_config.get('NIGHT_SUN_ALT_DEG', -6.0),
             'NIGHT_MOONMODE_ALT_DEG'         : self.indi_allsky_config.get('NIGHT_MOONMODE_ALT_DEG', 5.0),
             'NIGHT_MOONMODE_PHASE'           : self.indi_allsky_config.get('NIGHT_MOONMODE_PHASE', 50.0),
@@ -1130,6 +1134,10 @@ class AjaxConfigView(BaseView):
         self.indi_allsky_config['DAYTIME_TIMELAPSE']                    = bool(request.json['DAYTIME_TIMELAPSE'])
         self.indi_allsky_config['DAYTIME_CONTRAST_ENHANCE']             = bool(request.json['DAYTIME_CONTRAST_ENHANCE'])
         self.indi_allsky_config['NIGHT_CONTRAST_ENHANCE']               = bool(request.json['NIGHT_CONTRAST_ENHANCE'])
+        self.indi_allsky_config['DAYTIME_AUTO_STRETCH']                 = bool(request.json['DAYTIME_AUTO_STRETCH'])
+        self.indi_allsky_config['NIGHT_AUTO_STRETCH']                   = bool(request.json['NIGHT_AUTO_STRETCH'])
+        self.indi_allsky_config['AUTO_STRETCH_SHADOWS_CLIP']            = float(request.json['AUTO_STRETCH_SHADOWS_CLIP'])
+        self.indi_allsky_config['AUTO_STRETCH_TARGET_BKG']              = float(request.json['AUTO_STRETCH_TARGET_BKG'])
         self.indi_allsky_config['NIGHT_SUN_ALT_DEG']                    = float(request.json['NIGHT_SUN_ALT_DEG'])
         self.indi_allsky_config['NIGHT_MOONMODE_ALT_DEG']               = float(request.json['NIGHT_MOONMODE_ALT_DEG'])
         self.indi_allsky_config['NIGHT_MOONMODE_PHASE']                 = float(request.json['NIGHT_MOONMODE_PHASE'])

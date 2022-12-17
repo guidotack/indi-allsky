@@ -339,6 +339,15 @@ def LOCATION_LONGITUDE_validator(form, field):
     if field.data > 180:
         raise ValidationError('Longitude must be less than 180')
 
+def AUTO_STRETCH_SHADOWS_CLIP_validator(form, field):
+    if not isinstance(field.data, (int, float)):
+        raise ValidationError('Please enter valid number')
+
+def AUTO_STRETCH_TARGET_BKG_validator(form, field):
+    if not isinstance(field.data, (int, float)):
+        raise ValidationError('Please enter valid number')
+    if field.data < 0.0 or field.data > 1.0:
+        raise ValidationError('Value must be between 0.0 and 1.0')
 
 def NIGHT_SUN_ALT_DEG_validator(form, field):
     if not isinstance(field.data, (int, float)):
@@ -1305,6 +1314,10 @@ class IndiAllskyConfigForm(FlaskForm):
     DAYTIME_TIMELAPSE                = BooleanField('Daytime Timelapse')
     DAYTIME_CONTRAST_ENHANCE         = BooleanField('Daytime Contrast Enhance')
     NIGHT_CONTRAST_ENHANCE           = BooleanField('Night time Contrast Enhance')
+    DAYTIME_AUTO_STRETCH             = BooleanField('Daytime Automatic Histogram Stretch')
+    NIGHT_AUTO_STRETCH               = BooleanField('Night time Automatic Histogram Stretch')
+    AUTO_STRETCH_SHADOWS_CLIP        = FloatField('Shadows clipping point for automatic histogram stretching', validators=[AUTO_STRETCH_SHADOWS_CLIP_validator])
+    AUTO_STRETCH_TARGET_BKG          = FloatField('Target background for automatic histogram stretching', validators=[AUTO_STRETCH_TARGET_BKG_validator])
     NIGHT_SUN_ALT_DEG                = FloatField('Sun altitude', validators=[NIGHT_SUN_ALT_DEG_validator])
     NIGHT_MOONMODE_ALT_DEG           = FloatField('Moonmode Moon Altitude', validators=[NIGHT_MOONMODE_ALT_DEG_validator])
     NIGHT_MOONMODE_PHASE             = FloatField('Moonmode Moon Phase', validators=[NIGHT_MOONMODE_PHASE_validator])

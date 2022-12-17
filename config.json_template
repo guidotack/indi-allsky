@@ -77,6 +77,12 @@
     "DAYTIME_TIMELAPSE"        : true,
     "DAYTIME_CONTRAST_ENHANCE" : false,
     "NIGHT_CONTRAST_ENHANCE"   : false,
+    
+    "DAYTIME_AUTO_STRETCH"     : false,
+    "NIGHT_AUTO_STRETCH"       : false,
+    "AUTO_STRETCH_SHADOWS_CLIP": -1.25,
+    "AUTO_STRETCH_TARGET_BKG"  : 0.25,
+
     "NIGHT_SUN_ALT_DEG"        : -6,
     "NIGHT_MOONMODE_ALT_DEG"   : 0,
     "NIGHT_MOONMODE_PHASE"     : 33,
