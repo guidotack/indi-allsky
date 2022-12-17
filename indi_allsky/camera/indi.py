@@ -915,6 +915,9 @@ class IndiClient(PyIndi.BaseClient):
             return fake_gain_info
         elif indi_exec in ['indi_fake_ccd']:
             return self.ccd_device.getCcdGain()
+        elif indi_exec in ['indi_atik_ccd']:
+            logger.warning('indi_atik_ccd does not support gain settings')
+            return fake_gain_info
         else:
             raise Exception('Gain config not implemented for {0:s}, open an enhancement request'.format(indi_exec))
 
@@ -989,6 +992,9 @@ class IndiClient(PyIndi.BaseClient):
             gain_config = {}
         elif indi_exec in ['indi_fake_ccd']:
             return self.ccd_device.setCcdGain(gain_value)
+        elif indi_exec in ['indi_atik_ccd']:
+            logger.warning('indi_atik_ccd does not support gain settings')
+            gain_config = {}
         else:
             raise Exception('Gain config not implemented for {0:s}, open an enhancement request'.format(indi_exec))
 
@@ -1046,6 +1052,9 @@ class IndiClient(PyIndi.BaseClient):
             return
         elif indi_exec in ['indi_fake_ccd']:
             return self.ccd_device.setCcdBinMode(bin_value)
+        elif indi_exec in ['indi_atik_ccd']:
+            logger.warning('indi_atik_ccd does not support bin settings')
+            return
         else:
             raise Exception('Binning config not implemented for {0:s}, open an enhancement request'.format(indi_exec))
 
